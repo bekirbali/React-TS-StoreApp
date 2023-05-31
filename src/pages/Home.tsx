@@ -27,7 +27,7 @@ const Home = () => {
         `https://dummyjson.com/products/search/?${search}`
       );
       console.log(data.limit);
-      //   dispatch(getSuccessProduct(data.products));
+      dispatch(getSuccessProduct(data.products));
     } catch (error) {
       console.log(error);
       dispatch(fetchFail());
