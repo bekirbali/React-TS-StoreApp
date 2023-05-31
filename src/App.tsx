@@ -6,7 +6,7 @@ import NavBar from "./components/NavBar";
 
 function App() {
   return (
-    <div className="bg-slate-500 min-h-screen text-center">
+    <div className="bg-slate-700 min-h-screen text-center">
       <BrowserRouter>
         <NavBar />
         <Routes>
