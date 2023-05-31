@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import SearchComp from "../components/SearchComp";
 import axios from "axios";
-import { Product, fetchStart } from "../features/productsSlice";
+import {
+  Product,
+  fetchFail,
+  fetchStart,
+  getSuccessProduct,
+} from "../features/productsSlice";
 import { useAppDispatch } from "../app/hooks";
 
 export interface Products {
@@ -22,8 +27,10 @@ const Home = () => {
         `https://dummyjson.com/products/search/?${search}`
       );
       console.log(data.limit);
+      //   dispatch(getSuccessProduct(data.products));
     } catch (error) {
       console.log(error);
+      dispatch(fetchFail());
     }
   };
 
