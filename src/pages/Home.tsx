@@ -17,7 +17,7 @@ export interface Products {
 }
 
 const Home = () => {
-  const [search, setSearch] = useState<string>("phone");
+  const [search, setSearch] = useState<string>("");
   const dispatch = useAppDispatch();
 
   const getData = async () => {
@@ -34,6 +34,10 @@ const Home = () => {
     }
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+  };
+
   useEffect(() => {
     getData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -41,7 +45,7 @@ const Home = () => {
 
   return (
     <div>
-      <SearchComp />
+      <SearchComp handleChange={handleChange} />
     </div>
   );
 };

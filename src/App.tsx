@@ -8,7 +8,7 @@ import { store } from "./app/store";
 
 function App() {
   return (
-    <div className="bg-slate-700 min-h-screen text-center">
+    <div className="bg-slate-900 min-h-screen text-center text-white">
       <Provider store={store}>
         <BrowserRouter>
           <NavBar />
