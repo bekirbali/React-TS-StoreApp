@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SearchComp from "../components/SearchComp";
 import axios from "axios";
 import {
@@ -17,22 +17,26 @@ export interface Products {
 }
 
 const Home = () => {
-  const [search, setSearch] = useState<string>("");
+  const [search, setSearch] = useState<string>("phone");
   const dispatch = useAppDispatch();
 
   const getData = async () => {
     dispatch(fetchStart());
     try {
       const { data } = await axios.get<Products>(
-        `https://dummyjson.com/products/search/?${search}`
+        `https://dummyjson.com/products/search/?q=${search}`
       );
-      console.log(data.limit);
       dispatch(getSuccessProduct(data.products));
+      console.log(data.products);
     } catch (error) {
       console.log(error);
       dispatch(fetchFail());
     }
   };
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <div>
