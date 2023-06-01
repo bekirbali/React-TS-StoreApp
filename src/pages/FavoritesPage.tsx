@@ -18,7 +18,12 @@ const FavoritesPage = () => {
   return (
     <div className="flex justify-center gap-3">
       {favorites.map((item) => (
-        <Card item={item} text="remove" handleFunc={handleRemove} />
+        <Card
+          key={item.id}
+          item={item}
+          text="remove"
+          handleFunc={handleRemove}
+        />
       ))}
     </div>
   );

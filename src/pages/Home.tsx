@@ -6,10 +6,9 @@ import {
   fetchFail,
   fetchStart,
   getSuccessProduct,
-  removeFavorite,
 } from "../features/productsSlice";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { EventFunc, Product, Products, VoidFunc } from "../models/models";
+import { EventFunc, Product, Products } from "../models/models";
 import Card from "../components/Card";
 
 const Home = () => {
