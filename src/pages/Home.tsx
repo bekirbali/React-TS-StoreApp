@@ -2,18 +2,21 @@ import React, { useEffect, useState } from "react";
 import SearchComp from "../components/SearchComp";
 import axios from "axios";
 import {
+  addFavorites,
   fetchFail,
   fetchStart,
   getSuccessProduct,
+  removeFavorite,
 } from "../features/productsSlice";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { EventFunc, Products } from "../models/models";
+import { EventFunc, Product, Products, VoidFunc } from "../models/models";
+import Card from "../components/Card";
 
 const Home = () => {
   const [search, setSearch] = useState<string>("");
   const dispatch = useAppDispatch();
 
-  const { loading, error, productList } = useAppSelector(
+  const { loading, error, productList, favorites } = useAppSelector(
     (state) => state.productReducer
   );
 
@@ -39,6 +42,12 @@ const Home = () => {
     setSearch(e.target.value);
   };
 
+  const handleAdd = (product: Product) => {
+    if (favorites.filter((item) => item.id === product.id).length === 0) {
+      dispatch(addFavorites(product));
+    }
+  };
+
   useEffect(() => {
     getData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -56,9 +65,14 @@ const Home = () => {
           <div>loading</div>
         )
       ) : (
-        <div>
+        <div className="flex gap-3 flex-wrap justify-center">
           {productList.map((item) => (
-            <p key={item.id}>{item.title}</p>
+            <Card
+              key={item.id}
+              text="Add to Fav"
+              item={item}
+              handleFunc={handleAdd}
+            />
           ))}
         </div>
       )}
