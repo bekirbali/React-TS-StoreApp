@@ -2,23 +2,20 @@ import React, { useEffect, useState } from "react";
 import SearchComp from "../components/SearchComp";
 import axios from "axios";
 import {
-  Product,
   fetchFail,
   fetchStart,
   getSuccessProduct,
 } from "../features/productsSlice";
-import { useAppDispatch } from "../app/hooks";
-
-export interface Products {
-  products: Product[];
-  total: number;
-  skip: number;
-  limit: number;
-}
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { EventFunc, Products } from "../models/models";
 
 const Home = () => {
   const [search, setSearch] = useState<string>("");
   const dispatch = useAppDispatch();
+
+  const { loading, error, productList } = useAppSelector(
+    (state) => state.productReducer
+  );
 
   const getData = async () => {
     dispatch(fetchStart());
@@ -34,18 +31,37 @@ const Home = () => {
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setSearch(e.target.value);
+  // };
+
+  const handleChange: EventFunc = (e) => {
     setSearch(e.target.value);
   };
 
   useEffect(() => {
     getData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [search]);
 
   return (
     <div>
       <SearchComp handleChange={handleChange} />
+      {loading ? (
+        error ? (
+          <div>
+            <p className="text-red-500">something went wrong</p>
+          </div>
+        ) : (
+          <div>loading</div>
+        )
+      ) : (
+        <div>
+          {productList.map((item) => (
+            <p key={item.id}>{item.title}</p>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
